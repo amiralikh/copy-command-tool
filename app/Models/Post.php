@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Post extends Model
 {
+    use HasFactory;
+
     public function feed(): BelongsTo
     {
         return $this->belongsTo(Feed::class);

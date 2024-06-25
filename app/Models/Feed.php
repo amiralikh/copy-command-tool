@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class Feed extends Model
 {
     use HasFactory;
+
     public function instagramSource(): HasOne
     {
         return $this->hasOne(InstagramSource::class);
