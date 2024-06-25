@@ -19,7 +19,7 @@ jobs:
         image: mysql:5.7
         env:
           MYSQL_ROOT_PASSWORD: root
-          MYSQL_DATABASE: laravel
+          MYSQL_DATABASE: laravel_test
           MYSQL_USER: laravel
           MYSQL_PASSWORD: password
         ports:
@@ -51,7 +51,9 @@ jobs:
         run: php artisan key:generate
 
       - name: Create database
-        run: mysql -u root -proot -e "CREATE DATABASE laravel_test;"
+        run: |
+          sudo apt-get install -y mysql-client
+          mysql -h 127.0.0.1 -P 3306 -u root -proot -e "CREATE DATABASE laravel_test;"
 
       - name: Run migrations
         run: php artisan migrate --env=testing --force
