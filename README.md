@@ -7,60 +7,125 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## About Laravel
+# Feed Copy CLI Tool
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Overview
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+This project provides a command-line tool for copying specific entries from a production database to a development database, ensuring that only the necessary data is copied. This is particularly useful for investigating bugs that only occur with production data without having to copy the entire production database.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Features
 
-## Learning Laravel
+- Copy a specific feed entry and its associated data.
+- Option to copy only certain source entries (e.g., Instagram or TikTok).
+- Option to include a specific number of posts associated with the feed.
+- Unit tests to ensure the functionality of the CLI tool.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Requirements
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+- PHP 8.2 or higher
+- Laravel 11 or higher
+- Composer
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Installation
 
-## Laravel Sponsors
+1. **Clone the repository:**
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+    ```sh
+    git clone https://github.com/amiralikh/copy-command-tool.git
+    cd copy-command-tool
+    ```
 
-### Premium Partners
+2. **Install dependencies:**
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+    ```sh
+    composer install
+    ```
+
+3. **Set up environment:**
+
+   Copy the `.env.example` to `.env` and update the database configurations.
+
+    ```sh
+    cp .env.example .env
+    ```
+
+4. **Run migrations:**
+
+    ```sh
+    php artisan migrate
+    ```
+
+5. **Run tests to ensure everything is set up correctly:**
+
+    ```sh
+    php artisan test
+    ```
+
+## Usage
+
+The command-line tool provides several options for copying data:
+
+- Copy a feed with ID 123:
+
+    ```sh
+    php artisan copy:feed 123
+    ```
+
+- Copy a feed with ID 123 and its Instagram source:
+
+    ```sh
+    php artisan copy:feed 123 --only=instagram
+    ```
+
+- Copy a feed with ID 123, its Instagram source, and 5 associated posts:
+
+    ```sh
+    php artisan copy:feed 123 --only=instagram --include-posts=5
+    ```
+
+### Command Options
+
+- `--only`: Specifies which source to copy (`instagram` or `tiktok`).
+- `--include-posts`: Specifies the number of posts to copy.
+
+## Testing
+
+The project includes comprehensive unit tests to ensure the functionality of the CLI tool. The tests cover various scenarios, including:
+
+- Copying a feed without any sources or posts.
+- Copying a feed with Instagram or TikTok sources.
+- Copying a feed with a specified number of posts.
+- Handling non-existent feed IDs.
+
+Run the tests using Pest:
+
+```sh
+php artisan test
+```
+
+### Example Tests
+
+The test suite includes the following scenarios:
+
+- copies a feed without any sources or posts
+- copies feed with instagram source only
+- copies feed with tiktok source only
+- copies feed with posts only
+- copies feed with instagram source and specified number of posts
+- copies feed with tiktok source and specified number of posts
+- copies feed with all sources and posts
+- fails when feed does not exist
+- copies feed with zero posts when include-posts is zero
+- copies feed with instagram source and specified number of posts explicitly
 
 ## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Contributions are welcome! Please fork the repository and submit a pull request for any improvements or bug fixes.
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This project is licensed under the MIT License.
+
+## Contact
+
+For any questions or support, please open an issue or contact [amirali-kh@live.com](mailto:amirali-kh@live.com).
