@@ -50,10 +50,13 @@ jobs:
       - name: Generate application key
         run: php artisan key:generate
 
-      - name: Create database
+      - name: Check if database exists
         run: |
-          sudo apt-get install -y mysql-client
-          mysql -h 127.0.0.1 -P 3306 -u root -proot -e "CREATE DATABASE laravel_test;"
+          mysql -h 127.0.0.1 -P 3306 -u root -proot -e "USE laravel_test;" 2>/dev/null || echo "Database does not exist."
+
+      - name: Create database if not exists
+        run: |
+          mysql -h 127.0.0.1 -P 3306 -u root -proot -e "CREATE DATABASE IF NOT EXISTS laravel_test;"
 
       - name: Run migrations
         run: php artisan migrate --env=testing --force
